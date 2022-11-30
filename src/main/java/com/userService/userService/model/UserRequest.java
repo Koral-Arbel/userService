@@ -4,8 +4,8 @@ import java.time.DateTimeException;
 
 public class UserRequest {
     private Integer uniqueUserId;
-    private String UserFirstName;
-    private String UserLastName;
+    private String userFirstName;
+    private String userLastName;
     private String userEmail;
     private String userAge;
     private String userAddress;
@@ -13,12 +13,12 @@ public class UserRequest {
 
     public UserRequest() {
         this.uniqueUserId = uniqueUserId;
-        UserFirstName = userFirstName;
-        UserLastName = userLastName;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
         this.userEmail = userEmail;
         this.userAge = userAge;
         this.userAddress = userAddress;
-        this.userJoiningDate = userJoiningDate1;
+        this.userJoiningDate = userJoiningDate;
     }
 
     public Integer getUniqueUserId() {
@@ -26,11 +26,11 @@ public class UserRequest {
     }
 
     public String getUserFirstName() {
-        return UserFirstName;
+        return userFirstName;
     }
 
     public String getUserLastName() {
-        return UserLastName;
+        return userLastName;
     }
 
     public String getUserEmail() {
@@ -54,11 +54,11 @@ public class UserRequest {
     }
 
     public void setUserFirstName(String userFirstName) {
-        UserFirstName = userFirstName;
+        this.userFirstName = userFirstName;
     }
 
     public void setUserLastName(String userLastName) {
-        UserLastName = userLastName;
+        this.userLastName = userLastName;
     }
 
     public void setUserEmail(String userEmail) {
@@ -73,7 +73,7 @@ public class UserRequest {
         this.userAddress = userAddress;
     }
 
-  public void setUserJoiningDate(DateTimeException userJoiningDate) {
+    public void setUserJoiningDate(DateTimeException userJoiningDate) {
         this.userJoiningDate = userJoiningDate;
-  }
+    }
 }
