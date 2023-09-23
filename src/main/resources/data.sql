@@ -1,21 +1,13 @@
-DROP TABLE IF EXISTS customer_order;
-DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS user;
 
-CREATE TABLE customer (
+CREATE TABLE user(
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
-    first_name varchar(300) NOT NULL DEFAULT '',
-    last_name varchar(300) NOT NULL DEFAULT '',
-    email varchar(300) NOT NULL DEFAULT '',
-    status varchar(300) NOT NULL DEFAULT 'REGULAR',
+    first_name VARCHAR(100) NOT NULL DEFAULT '',
+    last_name VARCHAR(100) NOT NULL DEFAULT '',
+    email VARCHAR(100) NOT NULL DEFAULT '',
+    age int(3) NOT NULL,
+    address VARCHAR(100) NOT NULL DEFAULT '',
+    join_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    registered TINYINT(1) DEFAULT 0,
     PRIMARY KEY (id)
 );
-
-CREATE TABLE customer_order (
-    id int(11) unsigned NOT NULL AUTO_INCREMENT,
-    customer_id int(11) NOT NULL,
-    item_name varchar(300) NOT NULL DEFAULT '',
-    price int(11) NOT NULL DEFAULT '',
-    PRIMARY KEY (id),
-    FOREIGN KEY (customer_id) REFERENCES customer(id)
-);
-
