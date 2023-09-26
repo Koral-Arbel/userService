@@ -14,7 +14,7 @@ public interface UserRepository {
     User getUserById(Long id);
     List<User> getUsers();
     List<User> getUsersByFirstName(String firstName);
+    User getUserByEmail(String email);
 
-    Boolean existsByEmail(String email);
 
 }

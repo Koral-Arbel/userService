@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    User createUser(User user);
+    boolean createUser(UserResponse userResponse);
 
     User updateUser(User user);
 
@@ -15,6 +15,6 @@ public interface UserService {
     User getUserById(Long id);
     List<User> getUsers();
     List<User> getAllUsersByFirstName(String firstName);
+    User getUserByEmail(String email);
 
-    boolean isUserRegistered(String email);
 }

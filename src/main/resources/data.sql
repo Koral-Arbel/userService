@@ -8,6 +8,7 @@ CREATE TABLE user(
     age int(3) NOT NULL,
     address VARCHAR(100) NOT NULL DEFAULT '',
     join_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    registered TINYINT(1) DEFAULT 0,
+    registered BIT(1),
     PRIMARY KEY (id)
 );
+

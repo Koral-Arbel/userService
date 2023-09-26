@@ -2,6 +2,7 @@ package com.firstProject.service;
 
 import com.firstProject.model.User;
 import com.firstProject.model.UserResponse;
+import com.firstProject.pollService.PollService;
 import com.firstProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,46 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    UserService userService;
+    PollService pollService;
 
 
     @Override
-    public User createUser(User user) {
-        user.setRegistered(true);
-        return userRepository.createUser(user);
+    public boolean createUser(UserResponse userResponse) {
+        String email = userResponse.getEmail();
+
+        // Check if the email is already registered
+        boolean isEmailRegistered = userRepository.getUserByEmail(email) != null;
+        if (isEmailRegistered) {
+            // Handle the case where the email is already registered
+            // You can throw an exception or return an error response here
+            // For simplicity, let's assume an exception is thrown
+            throw  new IllegalArgumentException("Email is already registered.");
+        }
+
+        // If the email is not registered, proceed with user creation
+        User user = new User(
+                null,
+                userResponse.getFirstName(),
+                userResponse.getLastName(),
+                email,
+                userResponse.getAge(),
+                userResponse.getAddress(),
+                userResponse.getJoiningDate(),
+                userResponse.isRegistered()
+        );
+
+        user = userRepository.createUser(user);
+
+        return new UserResponse(
+                userResponse.getFirstName(),
+                userResponse.getLastName(),
+                userResponse.getEmail(),
+                userResponse.getAge(),
+                userResponse.getAddress(),
+                userResponse.getJoiningDate(),
+                userResponse.isRegistered()).isRegistered();
     }
+
 
     @Override
     public User updateUser(User user) {
@@ -31,6 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long id) {
+        pollService.deleteAnswersByUserId(id);
         userRepository.deleteUser(id);
     }
 
@@ -41,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
-        return null;
+        return userRepository.getUsers();
     }
 
     @Override
@@ -49,11 +83,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsersByFirstName(firstName);
     }
 
-
     @Override
-    public boolean isUserRegistered(String email) {
-        Boolean user = userRepository.existsByEmail(email);
-        return user != null && user.booleanValue();
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
     }
-
 }

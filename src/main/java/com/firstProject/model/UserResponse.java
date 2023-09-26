@@ -12,10 +12,8 @@ public class UserResponse {
     private LocalDateTime joiningDate;
     private boolean registered;
 
-    public UserResponse(){}
-
-    public UserResponse(Long id, String firstName, String lastName, String email, int age, String address, LocalDateTime joiningDate, boolean registered) {
-        this.id = id;
+    public UserResponse() {}
+    public UserResponse(String firstName, String lastName, String email, int age, String address, LocalDateTime joiningDate, boolean registered) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

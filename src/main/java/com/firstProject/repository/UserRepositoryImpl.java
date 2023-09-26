@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements UserRepository {
 
     private static final String TABLE_NAME_USER = "user";
 
@@ -59,41 +59,42 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public User getUserById(Long id) {
-        String sql="SELECT * FROM "+TABLE_NAME_USER+" WHERE id=?";
+        String sql = "SELECT * FROM " + TABLE_NAME_USER + " WHERE id=?";
         try {
-            return (User) jdbcTemplate.queryForObject(sql,new UserMapper(),id);
-        }catch (EmptyResultDataAccessException exception){
+            return (User) jdbcTemplate.queryForObject(sql, new UserMapper(), id);
+        } catch (EmptyResultDataAccessException exception) {
             return null;
         }
     }
 
     @Override
     public List<User> getUsers() {
-        String sql="SELECT * FROM " + TABLE_NAME_USER;
+        String sql = "SELECT * FROM " + TABLE_NAME_USER;
         try {
-            return jdbcTemplate.query(sql,new UserMapper());
-        }catch (EmptyResultDataAccessException exception){
+            return jdbcTemplate.query(sql, new UserMapper());
+        } catch (EmptyResultDataAccessException exception) {
             return null;
         }
     }
 
     @Override
     public List<User> getUsersByFirstName(String firstName) {
-        String sql="SELECT * FROM "+ TABLE_NAME_USER + " THERE first_name=?";
+        String sql = "SELECT * FROM " + TABLE_NAME_USER + " WHERE first_name=?";
         try {
-            return jdbcTemplate.query(sql,new UserMapper(),firstName);
-        }catch (EmptyResultDataAccessException exception){
+            return jdbcTemplate.query(sql, new UserMapper(), firstName);
+        } catch (EmptyResultDataAccessException exception) {
             return null;
         }
     }
 
     @Override
-    public Boolean existsByEmail(String email) {
-        String sql="SELECT * FROM " + TABLE_NAME_USER +" WHERE email=?";
+    public User getUserByEmail(String email) {
+        String sql="Select * From "+ TABLE_NAME_USER +" WHERE email=?";
         try {
-            return (boolean) jdbcTemplate.queryForObject(sql,new UserMapper(),email);
+            return jdbcTemplate.queryForObject(sql,new UserMapper(),email);
         }catch (EmptyResultDataAccessException exception){
             return null;
         }
     }
 }
+

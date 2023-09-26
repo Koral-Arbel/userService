@@ -2,14 +2,17 @@ package com.firstProject.repository.mapper;
 
 import com.firstProject.model.User;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserMapper implements RowMapper {
+@Component
+public class UserMapper implements RowMapper<User> {
     @Override
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new User(
+    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+        System.out.println("I'm inside the user mapper");
+        User user = new User(
                 rs.getLong("id"),
                 rs.getString("first_name"),
                 rs.getString("last_name"),
@@ -19,5 +22,6 @@ public class UserMapper implements RowMapper {
                 rs.getDate("join_date").toLocalDate().atStartOfDay(),
                 Boolean.parseBoolean("registered")
         );
+        return user;
     }
 }

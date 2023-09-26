@@ -1,6 +1,5 @@
 package com.firstProject.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.firstProject.model.User;
 import com.firstProject.model.UserResponse;
 import com.firstProject.service.UserService;
@@ -14,17 +13,18 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @PostMapping(value = "/user/create")
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public boolean createUser(@RequestBody UserResponse userResponse){
+        return userService.createUser(userResponse);
     }
 
-        @PutMapping(value = "/user/{userId}/update")
+    @PutMapping(value = "/user/{userId}/update")
         public void updateUser (@PathVariable Long userId, @RequestBody User user){
             userService.updateUser(user);
-        }
+    }
 
-        @DeleteMapping(value = "/user/{userId}/delete")
+    @DeleteMapping(value = "/user/{userId}/delete")
         public void deleteUser (@PathVariable Long userId){
             userService.deleteUserById(userId);
         }
