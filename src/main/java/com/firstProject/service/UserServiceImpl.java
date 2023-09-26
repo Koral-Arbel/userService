@@ -29,10 +29,9 @@ public class UserServiceImpl implements UserService {
             // Handle the case where the email is already registered
             // You can throw an exception or return an error response here
             // For simplicity, let's assume an exception is thrown
-            throw  new IllegalArgumentException("Email is already registered.");
+            throw new IllegalArgumentException("Email is already registered.");
         }
 
-        // If the email is not registered, proceed with user creation
         User user = new User(
                 null,
                 userResponse.getFirstName(),
@@ -40,21 +39,21 @@ public class UserServiceImpl implements UserService {
                 email,
                 userResponse.getAge(),
                 userResponse.getAddress(),
-                userResponse.getJoiningDate(),
-                userResponse.isRegistered()
+                userResponse.getJoiningDate()
         );
 
-        user = userRepository.createUser(user);
+        user = userRepository.createUser(userResponse);
 
         return new UserResponse(
-                userResponse.getFirstName(),
-                userResponse.getLastName(),
-                userResponse.getEmail(),
-                userResponse.getAge(),
-                userResponse.getAddress(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getAge(),
+                user.getAddress(),
                 userResponse.getJoiningDate(),
                 userResponse.isRegistered()).isRegistered();
     }
+
 
 
     @Override

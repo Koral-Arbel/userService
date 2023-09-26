@@ -1,6 +1,7 @@
 package com.firstProject.repository;
 
 import com.firstProject.model.User;
+import com.firstProject.model.UserResponse;
 import com.firstProject.repository.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,17 +19,17 @@ public class UserRepositoryImpl implements UserRepository {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public User createUser(User user) {
+    public User createUser(UserResponse userResponse) {
         String sql = "INSERT INTO " + TABLE_NAME_USER + " " + "(first_name, last_name, email, age, address, join_date, registered) values (?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(
                 sql,
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getAge(),
-                user.getAddress(),
-                user.getJoiningDate(),
-                user.getRegistered());
+                userResponse.getFirstName(),
+                userResponse.getLastName(),
+                userResponse.getEmail(),
+                userResponse.getAge(),
+                userResponse.getAddress(),
+                userResponse.getJoiningDate(),
+                userResponse.isRegistered());
         Long userId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
         return getUserById(userId);
     }
@@ -43,7 +44,6 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getEmail(),
                 user.getAge(),
                 user.getAddress(),
-                user.getJoiningDate(),
                 user.getId()
         );
         return getUserById(user.getId());
