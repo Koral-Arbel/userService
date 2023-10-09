@@ -7,8 +7,8 @@ CREATE TABLE user(
     email VARCHAR(100) NOT NULL DEFAULT '',
     age int(3) NOT NULL,
     address VARCHAR(100) NOT NULL DEFAULT '',
-    join_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    registered BIT(1),
+    join_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    registered BIT NOT NULL DEFAULT 0,
     PRIMARY KEY (id)
 );
 

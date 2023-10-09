@@ -54,8 +54,6 @@ public class UserServiceImpl implements UserService {
                 userResponse.isRegistered()).isRegistered();
     }
 
-
-
     @Override
     public User updateUser(User user) {
         return userRepository.updateUser(user);
@@ -85,5 +83,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) {
         return userRepository.getUserByEmail(email);
+    }
+
+    @Override
+    public boolean isEmailRegistered(String email) {
+        return userRepository.isEmailRegistered(email);
     }
 }

@@ -16,5 +16,6 @@ public interface UserService {
     List<User> getUsers();
     List<User> getAllUsersByFirstName(String firstName);
     User getUserByEmail(String email);
+    boolean isEmailRegistered(String email);
 
 }

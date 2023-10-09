@@ -15,6 +15,6 @@ public interface UserRepository {
     List<User> getUsers();
     List<User> getUsersByFirstName(String firstName);
     User getUserByEmail(String email);
-
+    boolean isEmailRegistered(String email);
 
 }
