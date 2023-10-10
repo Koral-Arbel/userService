@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
         name = "PollService",
-        url = "${externalApi.pollService.url}"
+        url = "http://localhost:8080"
 )
 public interface PollService {
-
 
     @DeleteMapping(value = "/answerByUserId/deleteAnswers/{userId}")
     void deleteAnswersByUserId(@PathVariable Long userId);
 
     @GetMapping(value = "/user")
-    UserResponse getUserByEmail(@RequestParam String email);
+    UserResponse getUserResponseByEmail(@RequestParam String email);
 }

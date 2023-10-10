@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserRepository {
 
-    User createUser(UserResponse userResponse);
+    User createUser(User user, UserResponse userResponse);
 
     User updateUser(User user);
     void deleteUser(Long id);

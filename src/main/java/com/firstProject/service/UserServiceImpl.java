@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
                 userResponse.getJoiningDate()
         );
 
-        user = userRepository.createUser(userResponse);
+        user = userRepository.createUser(user, userResponse);
 
         return new UserResponse(
                 user.getFirstName(),

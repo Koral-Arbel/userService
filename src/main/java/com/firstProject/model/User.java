@@ -1,5 +1,7 @@
 package com.firstProject.model;
 
+import com.firstProject.service.UserService;
+
 import java.time.LocalDateTime;
 
 public class User {
