@@ -1,22 +1,20 @@
 package com.firstProject.pollService;
 
 import com.firstProject.model.UserResponse;
-import org.h2.engine.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
         name = "PollService",
-        url = "http://localhost:8080"
+        url = "http://localhost:8081"
 )
-public interface PollService {
+public interface PollServiceClient {
 
     @DeleteMapping(value = "/answerByUserId/deleteAnswers/{userId}")
     void deleteAnswersByUserId(@PathVariable Long userId);
 
     @GetMapping(value = "/user")
-    UserResponse getUserResponseByEmail(@RequestParam String email);
+    UserResponse getUserResponseByEmail(@PathVariable String email);
 }

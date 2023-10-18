@@ -2,7 +2,7 @@ package com.firstProject.service;
 
 import com.firstProject.model.User;
 import com.firstProject.model.UserResponse;
-import com.firstProject.pollService.PollService;
+import com.firstProject.pollService.PollServiceClient;
 import com.firstProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    PollService pollService;
+    PollServiceClient pollServiceClient;
 
 
     @Override
-    public boolean createUser(UserResponse userResponse) {
+    public void createUser(UserResponse userResponse) {
         String email = userResponse.getEmail();
 
         // Check if the email is already registered
@@ -41,17 +41,7 @@ public class UserServiceImpl implements UserService {
                 userResponse.getAddress(),
                 userResponse.getJoiningDate()
         );
-
         user = userRepository.createUser(user, userResponse);
-
-        return new UserResponse(
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getAge(),
-                user.getAddress(),
-                userResponse.getJoiningDate(),
-                userResponse.isRegistered()).isRegistered();
     }
 
     @Override
@@ -61,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long id) {
-        pollService.deleteAnswersByUserId(id);
+        pollServiceClient.deleteAnswersByUserId(id);
         userRepository.deleteUser(id);
     }
 
@@ -88,5 +78,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isEmailRegistered(String email) {
         return userRepository.isEmailRegistered(email);
+    }
+
+    @Override
+    public boolean userExists(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean authenticateUser(String email) {
+        User user = userRepository.getUserByEmail(email);
+        if (user != null) {
+            return true;
+        }
+        return false;
     }
 }

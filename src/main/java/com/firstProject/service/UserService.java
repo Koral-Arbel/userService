@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    boolean createUser(UserResponse userResponse);
+    void createUser(UserResponse userResponse);
 
     User updateUser(User user);
 
@@ -18,4 +18,6 @@ public interface UserService {
     User getUserByEmail(String email);
     boolean isEmailRegistered(String email);
 
+    boolean userExists(String email);
+    boolean authenticateUser(String email);
 }

@@ -2,6 +2,8 @@ package com.firstProject.model;
 
 import java.time.LocalDateTime;
 
+
+
 public class UserResponse {
     private Long id;
     private String firstName;
@@ -86,4 +88,7 @@ public class UserResponse {
     public void setRegistered(boolean registered) {
         this.registered = registered;
     }
+
+
+
 }

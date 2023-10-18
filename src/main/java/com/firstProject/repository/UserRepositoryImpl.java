@@ -99,7 +99,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean isEmailRegistered(String email) {
-        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        String sql = "SELECT COUNT(*) FROM user WHERE email = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        return count > 0;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        String sql = "SELECT COUNT(*) FROM user WHERE email = ?";
         int count = jdbcTemplate.queryForObject(sql, Integer.class, email);
         return count > 0;
     }

@@ -17,4 +17,5 @@ public interface UserRepository {
     User getUserByEmail(String email);
     boolean isEmailRegistered(String email);
 
+    boolean existsByEmail(String email);
 }
