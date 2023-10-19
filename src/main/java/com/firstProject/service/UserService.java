@@ -18,6 +18,4 @@ public interface UserService {
     User getUserByEmail(String email);
     boolean isEmailRegistered(String email);
 
-    boolean userExists(String email);
-    boolean authenticateUser(String email);
 }

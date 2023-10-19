@@ -11,17 +11,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping(value = "/user")
+@CrossOrigin(origins = "*")
+
 @RestController
 public class UserController {
+
     @Autowired
     UserService userService;
     @Autowired
     PollServiceClient pollServiceClient;
 
-    @PostMapping(value = "/user/create")
-    @CrossOrigin
+    @PostMapping(value = "/create")
     public ResponseEntity<String> createUser(@RequestBody UserResponse userResponse) {
-        if (!userService.userExists(userResponse.getEmail())) {
+        if (!userService.isEmailRegistered(userResponse.getEmail())) {
             userService.createUser(userResponse);
             return ResponseEntity.status(HttpStatus.OK).body("User registered successfully.");
         } else {
@@ -29,34 +32,40 @@ public class UserController {
         }
     }
 
-    @PutMapping(value = "/user/{userId}/update")
-        public void updateUser (@PathVariable Long userId, @RequestBody User user){
-            userService.updateUser(user);
+    @PostMapping(value = "/register")
+    public ResponseEntity<String> registerUser(@RequestParam UserResponse userResponse) {
+        if (!userService.isEmailRegistered(userResponse.getEmail())) {
+            userService.createUser(userResponse);
+            return ResponseEntity.ok("User registered successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists.");
+        }
     }
 
-    @DeleteMapping(value = "/user/{userId}/delete")
-        public void deleteUser (@PathVariable Long userId){
-            userService.deleteUserById(userId);
-        }
-        @GetMapping(value = "/user/{userId}")
-        public User getUserById (@PathVariable Long userId){
-            return userService.getUserById(userId);
-        }
+    @PutMapping(value = "/{userId}/update")
+    public void updateUser(@PathVariable Long userId, @RequestBody User user) {
+        userService.updateUser(user);
+    }
+
+    @DeleteMapping(value = "/{userId}/delete")
+    public void deleteUser(@PathVariable Long userId) {
+        userService.deleteUserById(userId);
+        pollServiceClient.deleteUserAnswerById(userId);
+    }
+
+    @GetMapping(value = "/{userId}")
+    public User getUserById(@PathVariable Long userId) {
+        return userService.getUserById(userId);
+    }
+
+    @GetMapping(value = "")
+    public User getUserByEmail(@RequestParam String email) {
+        return userService.getUserByEmail(email);
+    }
 
 
-        @GetMapping(value = "/usersList")
-        public List<User> getUsersByFirstName (@RequestParam String firstName){
-            return userService.getAllUsersByFirstName(firstName);
-        }
-
-        @GetMapping(value = "/checkUserByEmail/{email}")
-        public ResponseEntity<String> checkEmail (@PathVariable String email) {
-            if (userService.userExists(email)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
-            } else {
-                return ResponseEntity.status(HttpStatus.OK).body("Email does not exist");
-            }
-        }
+    @GetMapping(value = "/usersList")
+    public List<User> getUsersByFirstName(@RequestParam String firstName) {
+        return userService.getAllUsersByFirstName(firstName);
+    }
 }
-
-

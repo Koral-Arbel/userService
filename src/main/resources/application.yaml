@@ -1,6 +1,7 @@
 server:
   port: 8082
 
+
 spring:
   datasource:
     url: jdbc:h2:mem:mydb
@@ -13,12 +14,8 @@ spring:
     console:
       enabled: true
 
-externalApi:
-  pollService:
-    url: localhost:8081
+
+pollServiceClient:
+    url: http://localhost:8081
 
 
-redis:
-  host: localhost
-  port: 6380
-  ttl: 1000

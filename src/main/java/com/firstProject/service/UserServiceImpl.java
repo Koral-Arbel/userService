@@ -14,9 +14,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    PollServiceClient pollServiceClient;
+    private PollServiceClient pollServiceClient;
 
 
     @Override
@@ -24,11 +24,9 @@ public class UserServiceImpl implements UserService {
         String email = userResponse.getEmail();
 
         // Check if the email is already registered
-        boolean isEmailRegistered = userRepository.getUserByEmail(email) != null;
-        if (isEmailRegistered) {
+        if (userRepository.getUserByEmail(email) != null) {
             // Handle the case where the email is already registered
-            // You can throw an exception or return an error response here
-            // For simplicity, let's assume an exception is thrown
+            // You can throw a more specific exception or return an error response here
             throw new IllegalArgumentException("Email is already registered.");
         }
 
@@ -41,7 +39,8 @@ public class UserServiceImpl implements UserService {
                 userResponse.getAddress(),
                 userResponse.getJoiningDate()
         );
-        user = userRepository.createUser(user, userResponse);
+
+        userRepository.createUser(user, userResponse);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long id) {
-        pollServiceClient.deleteAnswersByUserId(id);
+        pollServiceClient.deleteUserAnswerById(id);
         userRepository.deleteUser(id);
     }
 
@@ -80,17 +79,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.isEmailRegistered(email);
     }
 
-    @Override
-    public boolean userExists(String email) {
-        return userRepository.existsByEmail(email);
-    }
-
-    @Override
-    public boolean authenticateUser(String email) {
-        User user = userRepository.getUserByEmail(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
-    }
 }
