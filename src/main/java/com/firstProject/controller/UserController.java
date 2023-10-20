@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@RequestMapping(value = "/user")
+@RequestMapping(value = "user")
 @CrossOrigin(origins = "*")
 
 @RestController
@@ -54,15 +55,24 @@ public class UserController {
     }
 
     @GetMapping(value = "/{userId}")
-    public User getUserById(@PathVariable Long userId) {
-        return userService.getUserById(userId);
+    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
+        User user = userService.getUserById(userId);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping(value = "")
-    public User getUserByEmail(@RequestParam String email) {
-        return userService.getUserByEmail(email);
+    public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
+        User user = userService.getUserByEmail(email);
+        if (email != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-
 
     @GetMapping(value = "/usersList")
     public List<User> getUsersByFirstName(@RequestParam String firstName) {

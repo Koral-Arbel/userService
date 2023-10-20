@@ -1,7 +1,5 @@
 package com.firstProject.model;
 
-import com.firstProject.service.UserService;
-
 import java.time.LocalDateTime;
 
 public class User {
@@ -12,12 +10,13 @@ public class User {
     private int age;
     private String address;
     private LocalDateTime joiningDate;
+    private boolean registered;
 
 
 
     public User(){}
 
-    public User(Long id, String firstName, String lastName, String email, int age, String address, LocalDateTime joiningDate) {
+    public User(Long id, String firstName, String lastName, String email, int age, String address, LocalDateTime joiningDate, boolean registered) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,6 +24,7 @@ public class User {
         this.age = age;
         this.address = address;
         this.joiningDate = joiningDate;
+        this.registered = registered;
 
     }
 
@@ -56,6 +56,10 @@ public class User {
         return joiningDate;
     }
 
+    public boolean isRegistered() {
+        return registered;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -82,5 +86,9 @@ public class User {
 
     public void setJoiningDate(LocalDateTime joiningDate) {
         this.joiningDate = joiningDate;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
     }
 }

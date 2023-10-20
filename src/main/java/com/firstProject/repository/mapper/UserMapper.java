@@ -19,7 +19,8 @@ public class UserMapper implements RowMapper<User> {
                 rs.getString("email"),
                 rs.getInt("age"),
                 rs.getString("address"),
-                rs.getTimestamp("join_date").toLocalDateTime()
+                rs.getTimestamp("join_date").toLocalDateTime(),
+                rs.getBoolean("registered")
         );
         return user;
     }
