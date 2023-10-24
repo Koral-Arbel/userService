@@ -31,6 +31,7 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getJoiningDate(),
                 userResponse.isRegistered());
         Long userId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
+        System.out.println("User save to data base");
         return getUserById(userId);
     }
 
@@ -66,7 +67,15 @@ public class UserRepositoryImpl implements UserRepository {
             return null;
         }
     }
-
+    @Override
+    public User getUserByEmail(String email) {
+        String sql = "SELECT * FROM " + TABLE_NAME_USER + " WHERE email=?";
+        try {
+            return jdbcTemplate.queryForObject(sql, new UserMapper(), email);
+        } catch (EmptyResultDataAccessException exception) {
+            return null;
+        }
+    }
     @Override
     public List<User> getUsers() {
         String sql = "SELECT * FROM " + TABLE_NAME_USER;
@@ -85,30 +94,6 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (EmptyResultDataAccessException exception) {
             return null;
         }
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        String sql="Select * From "+ TABLE_NAME_USER +" WHERE email=?";
-        try {
-            return jdbcTemplate.queryForObject(sql,new UserMapper(),email);
-        }catch (EmptyResultDataAccessException exception){
-            return null;
-        }
-    }
-
-    @Override
-    public boolean isEmailRegistered(String email) {
-        String sql = "SELECT COUNT(*) FROM user WHERE email = ?";
-        int count = jdbcTemplate.queryForObject(sql, Integer.class, email);
-        return count > 0;
-    }
-
-    @Override
-    public boolean existsByEmail(String email) {
-        String sql = "SELECT COUNT(*) FROM user WHERE email = ?";
-        int count = jdbcTemplate.queryForObject(sql, Integer.class, email);
-        return count > 0;
     }
 }
 

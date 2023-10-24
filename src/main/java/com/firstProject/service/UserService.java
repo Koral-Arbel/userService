@@ -13,8 +13,8 @@ public interface UserService {
 
     void deleteUserById(Long id);
     User getUserById(Long id);
+    User getUserByEmail(String email);
     List<User> getUsers();
     List<User> getAllUsersByFirstName(String firstName);
-    User getUserByEmail(String email);
 
 }

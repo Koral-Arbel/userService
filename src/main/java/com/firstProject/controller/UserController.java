@@ -45,7 +45,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/getId/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
         if (user != null) {
@@ -55,14 +55,9 @@ public class UserController {
         }
     }
 
-    @GetMapping("")
-    public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
-        User user = userService.getUserByEmail(email);
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/getEmail")
+    public User getUserByEmail(@RequestParam String email) {
+        return userService.getUserByEmail(email);
     }
 
     @GetMapping("/usersList")
