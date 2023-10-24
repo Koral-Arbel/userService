@@ -45,19 +45,32 @@ public class UserServiceImpl implements UserService {
         }
 
     @Override
-    public User updateUser(User user) {
-        return userRepository.updateUser(user);
+    public User updateUser(Long userId, User user) {
+        User existingUser = userRepository.getUserById(userId);
+        if (existingUser != null) {
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastName(user.getLastName());
+            existingUser.setEmail(user.getEmail());
+            existingUser.setAge(user.getAge());
+            existingUser.setAddress(user.getAddress());
+            existingUser.setJoiningDate(user.getJoiningDate());
+            existingUser.setRegistered(user.isRegistered());
+            userRepository.updateUser(existingUser);
+            return existingUser;
+        } else {
+            throw new IllegalArgumentException("User not found.");
+        }
     }
 
     @Override
-    public void deleteUserById(Long id) {
-        pollServiceClient.deleteUserAnswerById(id);
-        userRepository.deleteUser(id);
+    public void deleteUserById(Long userId) {
+        userRepository.deleteUser(userId);
+        pollServiceClient.deleteUserAnswerById(userId);
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepository.getUserById(id);
+    public User getUserById(Long userId) {
+        return userRepository.getUserById(userId);
     }
 
     @Override
@@ -74,10 +87,4 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         return userRepository.getUserByEmail(email);
     }
-
-    @Override
-    public boolean isEmailRegistered(String email) {
-        return userRepository.isEmailRegistered(email);
-    }
-
 }

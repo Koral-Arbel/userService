@@ -22,38 +22,30 @@ public class UserController {
     @Autowired
     PollServiceClient pollServiceClient;
 
-    @PostMapping(value = "/create")
+    @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody UserResponse userResponse) {
-        if (!userService.isEmailRegistered(userResponse.getEmail())) {
+        try {
             userService.createUser(userResponse);
             return ResponseEntity.status(HttpStatus.OK).body("User registered successfully.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
-    @PostMapping(value = "/register")
-    public ResponseEntity<String> registerUser(@RequestParam UserResponse userResponse) {
-        if (!userService.isEmailRegistered(userResponse.getEmail())) {
-            userService.createUser(userResponse);
-            return ResponseEntity.ok("User registered successfully.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists.");
-        }
+    @PutMapping("/{userId}/update")
+    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody User user) {
+        userService.updateUser(userId, user);
+        return ResponseEntity.status(HttpStatus.OK).body("User updated successfully.");
     }
 
-    @PutMapping(value = "/{userId}/update")
-    public void updateUser(@PathVariable Long userId, @RequestBody User user) {
-        userService.updateUser(user);
-    }
-
-    @DeleteMapping(value = "/{userId}/delete")
-    public void deleteUser(@PathVariable Long userId) {
+    @DeleteMapping("/{userId}/delete")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         userService.deleteUserById(userId);
-        pollServiceClient.deleteUserAnswerById(userId);
+        return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully.");
+
     }
 
-    @GetMapping(value = "/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
         if (user != null) {
@@ -63,18 +55,19 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "")
+    @GetMapping("")
     public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
         User user = userService.getUserByEmail(email);
-        if (email != null) {
+        if (user != null) {
             return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @GetMapping(value = "/usersList")
+    @GetMapping("/usersList")
     public List<User> getUsersByFirstName(@RequestParam String firstName) {
         return userService.getAllUsersByFirstName(firstName);
     }
+
 }

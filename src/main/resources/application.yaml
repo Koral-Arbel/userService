@@ -14,8 +14,7 @@ spring:
     console:
       enabled: true
 
-
-pollServiceClient:
-    url: http://localhost:8081
+PollServiceClient:
+  url: http://localhost:8081
 
 

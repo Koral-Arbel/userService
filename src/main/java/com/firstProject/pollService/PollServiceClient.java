@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @FeignClient(
         name = "PollServiceClient",
-        url = "http://localhost:8081",
-        path = "PollServiceClient"
+        url = "${PollServiceClient.url}"
 )
 public interface PollServiceClient {
 
-    @DeleteMapping(value = "userAnswer/delete/{userAnswerId}")
+    @DeleteMapping(value = "/userAnswer/delete/{userAnswerId}")
     void deleteUserAnswerById(@PathVariable Long id);
 }
