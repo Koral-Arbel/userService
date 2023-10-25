@@ -72,6 +72,10 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long userId) {
         return userRepository.getUserById(userId);
     }
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
+    }
 
     @Override
     public List<User> getUsers() {
@@ -83,8 +87,5 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsersByFirstName(firstName);
     }
 
-    @Override
-    public User getUserByEmail(String email) {
-        return userRepository.getUserByEmail(email);
-    }
+
 }

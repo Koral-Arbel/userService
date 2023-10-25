@@ -45,7 +45,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/getId/{userId}")
+    @GetMapping("/getUserById/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
         if (user != null) {
@@ -55,8 +55,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getEmail")
-    public User getUserByEmail(@RequestParam String email) {
+    @GetMapping("/getUserByEmail/{email}")
+    public User getUserByEmail(@PathVariable String email) {
         return userService.getUserByEmail(email);
     }
 
