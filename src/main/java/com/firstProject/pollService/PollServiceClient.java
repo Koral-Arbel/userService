@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.*;
 )
 public interface PollServiceClient {
 
-    @DeleteMapping(value = "/userAnswer/delete/{userAnswerId}")
+    @DeleteMapping("/userAnswer/delete/{userAnswerId}")
     void deleteUserAnswerById(@PathVariable Long id);
 }
