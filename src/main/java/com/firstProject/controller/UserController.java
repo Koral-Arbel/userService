@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping(value = "user")
+@RequestMapping(value = "/user")
 @CrossOrigin(origins = "*")
 
 @RestController
@@ -65,4 +65,9 @@ public class UserController {
         return userService.getAllUsersByFirstName(firstName);
     }
 
+    @GetMapping("/isRegistered/{userId}")
+    public ResponseEntity<Boolean> isRegistered(@PathVariable Long userId) {
+        boolean registered = userService.isRegistered(userId);
+        return ResponseEntity.ok(registered);
+    }
 }

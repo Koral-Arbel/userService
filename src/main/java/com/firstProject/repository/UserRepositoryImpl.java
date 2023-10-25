@@ -95,5 +95,16 @@ public class UserRepositoryImpl implements UserRepository {
             return null;
         }
     }
+
+    @Override
+    public Boolean isRegistered(String email) {
+        String sql = "SELECT registered FROM " + TABLE_NAME_USER + " WHERE email=?";
+        try {
+            int registeredValue = jdbcTemplate.queryForObject(sql, Integer.class);
+            return registeredValue == 1;
+        } catch (IllegalArgumentException exception){
+            return false;
+        }
+    }
 }
 

@@ -17,4 +17,6 @@ public interface UserService {
     List<User> getUsers();
     List<User> getAllUsersByFirstName(String firstName);
 
+    Boolean isRegistered(Long userId);
+
 }

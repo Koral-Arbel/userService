@@ -21,28 +21,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserResponse userResponse) {
-            String email = userResponse.getEmail();
+        String email = userResponse.getEmail();
 
-            // Check if the email is already registered
-            if (userRepository.getUserByEmail(email) != null) {
-                // Handle the case where the email is already registered
-                // You can throw a more specific exception or return an error response here
-                throw new IllegalArgumentException("Email is already registered.");
-            }
-
-            User user = new User(
-                    null,
-                    userResponse.getFirstName(),
-                    userResponse.getLastName(),
-                    email,
-                    userResponse.getAge(),
-                    userResponse.getAddress(),
-                    userResponse.getJoiningDate(),
-                    userResponse.isRegistered()
-            );
-
-            userRepository.createUser(user, userResponse);
+        // Check if the email is already registered
+        if (userRepository.getUserByEmail(email) != null) {
+            // Handle the case where the email is already registered
+            // You can throw a more specific exception or return an error response here
+            throw new IllegalArgumentException("Email is already registered.");
         }
+
+        User user = new User(
+                null,
+                userResponse.getFirstName(),
+                userResponse.getLastName(),
+                email,
+                userResponse.getAge(),
+                userResponse.getAddress(),
+                userResponse.getJoiningDate(),
+                true
+        );
+        userRepository.createUser(user, userResponse);
+    }
 
     @Override
     public User updateUser(Long userId, User user) {
@@ -72,6 +71,7 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long userId) {
         return userRepository.getUserById(userId);
     }
+
     @Override
     public User getUserByEmail(String email) {
         return userRepository.getUserByEmail(email);
@@ -87,5 +87,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsersByFirstName(firstName);
     }
 
-
+    @Override
+    public Boolean isRegistered(Long userId) {
+        User user = getUserById(userId);
+        if (user != null && user.isRegistered()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
