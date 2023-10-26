@@ -9,7 +9,7 @@ public interface UserRepository {
 
     User createUser(User user, UserResponse userResponse);
     User updateUser(User user);
-    void deleteUser(Long id);
+    void deleteUserAnswerById(Long id);
     User getUserById(Long id);
     User getUserByEmail(String email);
     List<User> getUsers();

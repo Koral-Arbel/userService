@@ -52,7 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUserAnswerById(Long id) {
         String sql = "DELETE FROM " + TABLE_NAME_USER + " WHERE id=?";
         jdbcTemplate.update(sql, id);
 

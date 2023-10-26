@@ -12,3 +12,9 @@ CREATE TABLE user(
     PRIMARY KEY (id)
 );
 
+INSERT INTO user (first_name, last_name, email, age, address, registered)
+VALUES ('Koral', 'Arbel', 'korali1995@gmail.com', 30, 'Israel', 1);
+
+INSERT INTO user (first_name, last_name, email, age, address, registered)
+VALUES ('Yarin', 'Arbel', 'Yarin@gmail.com', 25, 'Israel', 1);
+

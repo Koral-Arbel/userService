@@ -38,11 +38,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("User updated successfully.");
     }
 
-    @DeleteMapping("/{userId}/delete")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
-        userService.deleteUserById(userId);
-        return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully.");
-
+    @DeleteMapping("/deleteUser/{userId}")
+    public void deleteUserAnswerById(@PathVariable Long userId) {
+        userService.deleteUserAnswerById(userId);
     }
 
     @GetMapping("/getUserById/{userId}")
@@ -60,7 +58,7 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
-    @GetMapping("/usersList")
+    @GetMapping("/getUserByFirstName")
     public List<User> getUsersByFirstName(@RequestParam String firstName) {
         return userService.getAllUsersByFirstName(firstName);
     }

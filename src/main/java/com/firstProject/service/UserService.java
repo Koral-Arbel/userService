@@ -11,7 +11,7 @@ public interface UserService {
 
     User updateUser(Long userId, User user);
 
-    void deleteUserById(Long id);
+    void deleteUserAnswerById(Long id);
     User getUserById(Long id);
     User getUserByEmail(String email);
     List<User> getUsers();
