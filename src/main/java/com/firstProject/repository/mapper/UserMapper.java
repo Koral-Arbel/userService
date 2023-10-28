@@ -1,5 +1,4 @@
 package com.firstProject.repository.mapper;
-
 import com.firstProject.model.User;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;

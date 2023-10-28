@@ -1,8 +1,6 @@
 package com.firstProject.controller;
-
 import com.firstProject.model.User;
 import com.firstProject.model.UserResponse;
-import com.firstProject.pollService.PollServiceClient;
 import com.firstProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,11 +14,8 @@ import java.util.List;
 
 @RestController
 public class UserController {
-
     @Autowired
     UserService userService;
-    @Autowired
-    PollServiceClient pollServiceClient;
 
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody UserResponse userResponse) {
@@ -38,10 +33,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("User updated successfully.");
     }
 
-    @DeleteMapping("/deleteUser/{userId}")
+    @DeleteMapping("/userAnswer/deleteUser/{userId}")
     public void deleteUserAnswerById(@PathVariable Long userId) {
         userService.deleteUserAnswerById(userId);
     }
+
 
     @GetMapping("/getUserById/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {

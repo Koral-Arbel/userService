@@ -1,5 +1,4 @@
 package com.firstProject.repository;
-
 import com.firstProject.model.User;
 import com.firstProject.model.UserResponse;
 import com.firstProject.repository.mapper.UserMapper;
@@ -7,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
@@ -52,7 +50,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void deleteUserAnswerById(Long id) {
+    public void deleteUserById(Long id) {
         String sql = "DELETE FROM " + TABLE_NAME_USER + " WHERE id=?";
         jdbcTemplate.update(sql, id);
 

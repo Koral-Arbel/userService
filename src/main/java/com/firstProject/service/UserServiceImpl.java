@@ -1,13 +1,10 @@
 package com.firstProject.service;
-
 import com.firstProject.model.User;
 import com.firstProject.model.UserResponse;
 import com.firstProject.pollService.PollServiceClient;
 import com.firstProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.List;
 
 
@@ -23,14 +20,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(UserResponse userResponse) {
         String email = userResponse.getEmail();
-
-        // Check if the email is already registered
         if (userRepository.getUserByEmail(email) != null) {
-            // Handle the case where the email is already registered
-            // You can throw a more specific exception or return an error response here
             throw new IllegalArgumentException("Email is already registered.");
         }
-
         User user = new User(
                 null,
                 userResponse.getFirstName(),
@@ -64,8 +56,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserAnswerById(Long userId) {
+        User user = userRepository.getUserById(userId);
+        if (user == null) {
+            return;
+        }
         pollServiceClient.deleteUserAnswerById(userId);
-        userRepository.deleteUserAnswerById(userId);
+        userRepository.deleteUserById(userId);
     }
 
     @Override
